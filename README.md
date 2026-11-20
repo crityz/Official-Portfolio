@@ -1,6 +1,6 @@
 # James Dominic T. Ortega — Portfolio
 
-A React, TypeScript, and Vite portfolio site.
+My first official personal e-portfolio. 
 
 ## Run locally
 
