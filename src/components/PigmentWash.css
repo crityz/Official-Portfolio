@@ -1,0 +1,114 @@
+.pigment-wash {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  width: min(100%, 670px);
+  aspect-ratio: 640 / 560;
+  place-items: center;
+  overflow: visible;
+}
+
+.pigment-wash--surface {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  opacity: var(--pigment-intensity);
+  mix-blend-mode: soft-light;
+}
+
+.pigment-wash__surface {
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: pigment-wash-surface-drift 18s ease-in-out infinite alternate;
+}
+
+.pigment-wash__halo {
+  position: absolute;
+  z-index: -1;
+  width: 75%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(180 56 94 / 14%), rgb(70 29 44 / 5%) 45%, transparent 70%);
+  filter: blur(12px);
+}
+
+.pigment-wash__shape {
+  position: relative;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  animation: pigment-wash-drift 10s ease-in-out infinite;
+}
+
+.pigment-wash__asset,
+.pigment-wash__asset-tint {
+  position: absolute;
+  z-index: 1;
+  width: min(100%, 570px);
+  aspect-ratio: 1;
+  pointer-events: none;
+  animation: pigment-wash-breathe 8s ease-in-out infinite;
+}
+
+.pigment-wash__asset {
+  display: block;
+  object-fit: contain;
+  opacity: var(--pigment-intensity);
+  filter: contrast(1.35) saturate(.95);
+  mix-blend-mode: screen;
+}
+
+.pigment-wash__asset-tint {
+  background: radial-gradient(
+    ellipse at 50% 42%,
+    color-mix(in srgb, var(--pigment-tint) 42%, transparent),
+    color-mix(in srgb, var(--pigment-tint) 24%, transparent) 48%,
+    transparent 82%
+  );
+  filter: blur(8px);
+  opacity: calc(var(--pigment-intensity) * .8);
+  mix-blend-mode: screen;
+}
+
+.pigment-wash--static .pigment-wash__shape,
+.pigment-wash--static .pigment-wash__surface,
+.pigment-wash--static .pigment-wash__asset,
+.pigment-wash--static .pigment-wash__asset-tint {
+  animation: none;
+}
+
+@keyframes pigment-wash-drift {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-9px) rotate(1deg); }
+}
+
+@keyframes pigment-wash-breathe {
+  0%, 100% { transform: scale(.99) rotate(-.4deg); opacity: .72; }
+  50% { transform: scale(1.025) rotate(.55deg); opacity: .94; }
+}
+
+@keyframes pigment-wash-surface-drift {
+  from { opacity: .84; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pigment-wash__shape,
+  .pigment-wash__surface,
+  .pigment-wash__asset,
+  .pigment-wash__asset-tint {
+    animation: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .pigment-wash { width: min(100%, 500px); }
+  .pigment-wash__asset,
+  .pigment-wash__asset-tint { width: min(100%, 430px); }
+}
